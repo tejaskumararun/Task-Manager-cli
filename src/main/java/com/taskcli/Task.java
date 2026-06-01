@@ -30,7 +30,7 @@ public class Task
 
     public void addsubtask(String s) 
     { // new subtask with name as only field
-        System.out.print("Add more details?: Y or N");
+        System.out.print("Add more details?: Y or N: ");
         if (tsk.nextLine().charAt(0)=='Y')
         {
             System.out.print("Enter status for subtask: ");
@@ -49,7 +49,7 @@ public class Task
                     } 
                 catch (DateTimeParseException e) 
                 {
-                    System.out.println("Error: Invalid format. Please make sure to follow 'dd-MM-yyyy HH:mm'.");
+                    System.out.println("Error: Invalid format. Please make sure to follow 'dd-MM-yyyy HH:mm'");
                 }
             }
             subtasks.add(new subtask(s,stat,duedatetime));

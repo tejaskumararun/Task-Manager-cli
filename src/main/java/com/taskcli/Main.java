@@ -63,7 +63,7 @@ public class Main
             }
             catch (DateTimeParseException e)
              {
-                System.out.println("Invalid format. Try again.");
+                System.out.println("Invalid format ");
             }
         }
         newTask.setDuedate(dd);
@@ -78,7 +78,7 @@ public class Main
         }
 
         //Set completion date time
-        System.out.print("Add expected compeletion date time?: Y or N");
+        System.out.print("Add expected compeletion date time?: Y or N: ");
         String choice=sc.nextLine().trim();
         if (choice.charAt(0)=='Y')
         {
@@ -94,13 +94,13 @@ public class Main
                     } 
                 catch (DateTimeParseException e) 
                 {
-                    System.out.println("Error: Invalid format. Please make sure to follow 'dd-MM-yyyy HH:mm'.");
+                    System.out.println("Error: Invalid format. Please make sure to follow 'dd-MM-yyyy HH:mm' ");
                 }
             }
             newTask.setExpectedcompletiondate(edt);
         }
 
-        System.out.print("Add subtasks?: 1 for Y or 0 for N");
+        System.out.print("Add subtasks?: 1 for Y or 0 for N: ");
         int chs=sc.nextInt();
         sc.nextLine();
         while (chs!=0)
@@ -119,7 +119,7 @@ public class Main
     private static void printTasks() 
     {
         if (tasklist.isEmpty()) 
-            System.out.println("You have no tasks right now.");
+            System.out.println("Task List empty currently");
         else 
             for (int i = 0; i < tasklist.size(); i++) 
                 System.out.println((i + 1) + " " + tasklist.get(i).toString());
@@ -132,7 +132,7 @@ public class Main
 
         if (!file.exists()) 
         {
-            System.out.println("No save file found. Starting fresh.");
+            System.out.println("No save file found starting fresh");
             return;
         }
 
@@ -201,11 +201,11 @@ public class Main
                 }
             }
             fr.close();
-            System.out.println("Loaded " + tasklist.size() + " task(s).");
+            System.out.println("Loaded " + tasklist.size() + " tasks ");
         } 
         catch (FileNotFoundException e) 
         {
-            System.out.println("No save file found. Starting fresh.");
+            System.out.println("No save file found starting fresh");
         }
     }
 
@@ -224,7 +224,7 @@ public class Main
                     w.write(t.getSubtasks().get(j).toFileFormat() + "\n");
             }
             w.close();
-            System.out.println("Tasks saved successfully.");
+            System.out.println("Tasks saved successfully ");
         } 
         catch (IOException e) 
         {
