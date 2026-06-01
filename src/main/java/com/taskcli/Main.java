@@ -24,7 +24,7 @@ public class Main
         boolean continuerun =true;
         while (continuerun) 
         {
-            System.out.print("\nEnter choice: (1) View Tasks  (2) Add Task  (3) Quit");
+            System.out.print("\nEnter choice: (1) View Tasks  (2) Add Task  (3) Quit: ");
             int ch = sc.nextInt();
             sc.nextLine();
 
