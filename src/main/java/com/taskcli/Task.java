@@ -161,6 +161,9 @@ public class Task
         else
             pr = "[ ] " + maintask + " (Due: " + duedate + ") " + stat + " (Expected Completion: " + expComp + ") Created Date: " + createddate;
 
+        if (!subtasks.isEmpty()) 
+            for (subtask st : subtasks) 
+                pr += "\n        -> " + st.toString(); 
         return pr;
     }
 }
