@@ -82,6 +82,11 @@ public class Task
         this.duedate = date;
     }
 
+    public void setMaintask(String name) 
+    {
+        this.maintask = name;
+    }
+
     public String getMaintask()
     {
         return maintask;

@@ -14,6 +14,10 @@ public class subtask
         this.name = name;
         this.done = false;
     }
+    public void setName(String name) 
+    {
+        this.name = name;
+    }
 
     public subtask(String name, String status, LocalDateTime duedatetime) 
     {

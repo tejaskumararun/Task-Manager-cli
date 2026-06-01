@@ -131,7 +131,7 @@ public class Main
         {
             Task t = tasklist.get(index);
             System.out.println("Modifying task: " + t.getMaintask());
-            System.out.println("Available commands: 1) Change status\t 2) Mark done\t 3) Modify Subtasks\t 4) Change Due date\t 5) Change expected completion date ");
+            System.out.println("Available commands: 1) Change status\t 2) Mark done\t 3) Modify Subtasks\t \n\t 4) Change Due date\t 5) Change expected completion date \n\t 6) Change Name");
             System.out.print("Enter a choice: ");
             int chc = sc.nextInt();
             sc.nextLine();
@@ -158,39 +158,42 @@ public class Main
                             subtask st = subs.get(ind);
 
                             System.out.println("Editing Subtask: " + st.getName());
-                            System.out.print("Avaiable options: 1) Status or 2) Due Date or 3) Mark done: ");
+                            System.out.print("Avaiable options: 1) Status or 2) Due Date or 3) Mark done or 4) Change name: ");
                             int chsub = sc.nextInt();
                             sc.nextLine();
 
-                            if (chsub == 1) 
+                            switch(chsub)
                             {
-                                System.out.print("New status: ");
-                                String stat=sc.nextLine();
-                                st.setStatus(stat);
-                            } 
-                            else if (chsub == 2) 
-                            {
-                                System.out.print("Enter new due date (DD-MM-YYYY HH:mm): ");
-                                LocalDateTime dd=null;
-                                while (dd == null) 
-                                {
-                                    System.out.print("Enter due date time (DD-MM-YYYY hh:mm): ");
-                                    String input = sc.nextLine().trim(); 
-                                    try 
-                                    {
-                                        dd = LocalDateTime.parse(input, dmyhm);
+                               case 1-> {
+                                            System.out.print("New status: ");
+                                            String stat=sc.nextLine();
+                                            st.setStatus(stat);
+                                        } 
+                                case 2->{
+                                            System.out.print("Enter new due date (DD-MM-YYYY HH:mm): ");
+                                            LocalDateTime dd=null;
+                                            while (dd == null) 
+                                            {
+                                                System.out.print("Enter due date time (DD-MM-YYYY hh:mm): ");
+                                                String input = sc.nextLine().trim(); 
+                                                try 
+                                                {
+                                                    dd = LocalDateTime.parse(input, dmyhm);
+                                                }
+                                                catch (DateTimeParseException e)
+                                                {
+                                                    System.out.println("Invalid format ");
+                                                }
+                                            }
+                                            st.setDuedate(dd);
+                                        }
+                            case 3-> st.setDone(true);
+                            case 4->{
+                                        System.out.print("Enter new subtask name: ");
+                                        st.setName(sc.nextLine());
+                                        System.out.println("Subtask renamed");
                                     }
-                                    catch (DateTimeParseException e)
-                                    {
-                                        System.out.println("Invalid format ");
-                                    }
-                                }
-                                st.setDuedate(dd);
-                            }
-                            else if (chsub==3)
-                                st.setDone(true);
-                            else
-                                System.out.print("Invalid option ");
+                            default-> System.out.print("Invalid option ");
                         }
                 case 4->{
                             System.out.print("Enter new due date (DD-MM-YYYY HH:mm): ");
@@ -228,6 +231,12 @@ public class Main
                             }
                             t.setExpectedcompletiondate(edt);
                         }
+                case 6->{
+                            System.out.print("Enter new task name: ");
+                            t.setMaintask(sc.nextLine());
+                            System.out.println("Task renamed");
+                        }
+                default-> System.out.print("Invalid");
             }
             saveTasksToFile();
         }
