@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main 
@@ -24,7 +25,7 @@ public class Main
         boolean continuerun =true;
         while (continuerun) 
         {
-            System.out.print("\nEnter choice: (1) View Tasks  (2) Add Task  (3) Quit: ");
+            System.out.print("\nEnter choice: (1) View Tasks  (2) Add Task  (3) Quit (4) Modify Tasks/subtasks:  ");
             int ch = sc.nextInt();
             sc.nextLine();
 
@@ -36,6 +37,7 @@ public class Main
                                 System.out.println("Task saved");
                             }
                 case 3-> continuerun=false;
+                case 4-> modifyTask();
                 default -> System.out.println("Invalid choice");
             }
         }
@@ -56,7 +58,7 @@ public class Main
         while (dd == null) 
         {
             System.out.print("Enter due date time (DD-MM-YYYY hh:mm): ");
-            String input = sc.nextLine().trim(); // Safe to use next() because there are no spaces
+            String input = sc.nextLine().trim(); 
             try 
             {
                 dd = LocalDateTime.parse(input, dmyhm);
@@ -114,6 +116,121 @@ public class Main
         }
         
         return newTask;
+    }
+    private static void modifyTask() 
+    {
+        Scanner sc = new Scanner(System.in);
+        printTasks();
+        if (tasklist.isEmpty()) return;
+
+        System.out.print("Enter task number to modify: ");
+        int index = sc.nextInt() - 1;
+        sc.nextLine();
+
+        if (index >= 0 && index < tasklist.size()) 
+        {
+            Task t = tasklist.get(index);
+            System.out.println("Modifying task: " + t.getMaintask());
+            System.out.println("Available commands: 1) Change status\t 2) Mark done\t 3) Modify Subtasks\t 4) Change Due date\t 5) Change expected completion date ");
+            System.out.print("Enter a choice: ");
+            int chc = sc.nextInt();
+            sc.nextLine();
+            DateTimeFormatter dmyhm = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+            switch(chc)
+            {
+                case 1->{
+                            System.out.print("Enter new status: ");
+                            t.setStatus(sc.nextLine());
+                        }
+                case 2->t.setDone(!t.isDone());
+                case 3->{
+                            List<subtask> subs = t.getSubtasks();
+                            if (subs.isEmpty()) 
+                            {
+                                System.out.println("No subtasks to modify.");
+                                return;
+                            }
+                            for (int i = 0; i < subs.size(); i++) 
+                                System.out.println((i + 1) + ". " + subs.get(i).toString());
+                            System.out.print("Select subtask to modify done: ");
+                            int ind = sc.nextInt() - 1;
+                            subtask st = subs.get(ind);
+
+                            System.out.println("Editing Subtask: " + st.getName());
+                            System.out.print("Avaiable options: 1) Status or 2) Due Date or 3) Mark done: ");
+                            int chsub = sc.nextInt();
+                            sc.nextLine();
+
+                            if (chsub == 1) 
+                            {
+                                System.out.print("New status: ");
+                                String stat=sc.nextLine();
+                                st.setStatus(stat);
+                            } 
+                            else if (chsub == 2) 
+                            {
+                                System.out.print("Enter new due date (DD-MM-YYYY HH:mm): ");
+                                LocalDateTime dd=null;
+                                while (dd == null) 
+                                {
+                                    System.out.print("Enter due date time (DD-MM-YYYY hh:mm): ");
+                                    String input = sc.nextLine().trim(); 
+                                    try 
+                                    {
+                                        dd = LocalDateTime.parse(input, dmyhm);
+                                    }
+                                    catch (DateTimeParseException e)
+                                    {
+                                        System.out.println("Invalid format ");
+                                    }
+                                }
+                                st.setDuedate(dd);
+                            }
+                            else if (chsub==3)
+                                st.setDone(true);
+                            else
+                                System.out.print("Invalid option ");
+                        }
+                case 4->{
+                            System.out.print("Enter new due date (DD-MM-YYYY HH:mm): ");
+                            LocalDateTime dd=null;
+                            while (dd == null) 
+                            {
+                                System.out.print("Enter due date time (DD-MM-YYYY hh:mm): ");
+                                String input = sc.nextLine().trim(); 
+                                try 
+                                {
+                                    dd = LocalDateTime.parse(input, dmyhm);
+                                }
+                                catch (DateTimeParseException e)
+                                {
+                                    System.out.println("Invalid format ");
+                                }
+                            }
+                            t.setDuedate(dd);
+                        }
+                case 5->{
+                            LocalDateTime edt = null;    
+                            while (edt==null)
+                            {   
+                                System.out.println("Enter expected completion date and time in format (DD-MM-YYYY HH:MM): ");
+                                String ed = sc.nextLine().trim();
+
+                                try {
+                                        edt = LocalDateTime.parse(ed, dmyhm);
+                                        System.out.println("Success! Date saved: " + edt);
+                                    } 
+                                catch (DateTimeParseException e) 
+                                {
+                                    System.out.println("Error: Invalid format. Please make sure to follow 'dd-MM-yyyy HH:mm' ");
+                                }
+                            }
+                            t.setExpectedcompletiondate(edt);
+                        }
+            }
+            saveTasksToFile();
+        }
     }
 
     private static void printTasks() 

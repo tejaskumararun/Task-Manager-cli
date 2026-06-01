@@ -49,6 +49,14 @@ public class subtask
         this.done = done;
         this.status="Completed";
     }
+    public void setStatus(String stat) 
+    {
+        this.status = stat;
+    }
+    public void setDuedate(LocalDateTime dd) 
+    {
+        this.duedatetime = dd;
+    }
 
     @Override
     public String toString() 
