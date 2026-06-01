@@ -42,7 +42,7 @@ public class Task
             while (duedatetime==null)
             {      
                 System.out.println("Enter date and time in format (DD-MM-YYYY HH:MM): ");
-                String dd = tsk.nextLine();
+                String dd = tsk.nextLine().trim();
                 try {
                     duedatetime = LocalDateTime.parse(dd, dmyhm);
                     System.out.println("Success! Date saved: " + duedatetime);

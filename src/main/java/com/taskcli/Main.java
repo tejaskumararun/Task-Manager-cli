@@ -26,6 +26,7 @@ public class Main
         {
             System.out.print("\nEnter choice: (1) View Tasks  (2) Add Task  (3) Quit");
             int ch = sc.nextInt();
+            sc.nextLine();
 
             switch (ch) 
             {
@@ -55,7 +56,7 @@ public class Main
         while (dd == null) 
         {
             System.out.print("Enter due date time (DD-MM-YYYY hh:mm): ");
-            String input = sc.next(); // Safe to use next() because there are no spaces
+            String input = sc.nextLine().trim(); // Safe to use next() because there are no spaces
             try 
             {
                 dd = LocalDateTime.parse(input, dmyhm);
@@ -78,13 +79,15 @@ public class Main
 
         //Set completion date time
         System.out.print("Add expected compeletion date time?: Y or N");
-        if (sc.next().charAt(0)=='Y')
+        String choice=sc.nextLine().trim();
+        if (choice.charAt(0)=='Y')
         {
-            System.out.println("Enter expected completion date and time in format (DD-MM-YYYY HH:MM): ");
-            String ed = sc.nextLine();
             LocalDateTime edt = null;    
             while (edt==null)
-            {        
+            {   
+                System.out.println("Enter expected completion date and time in format (DD-MM-YYYY HH:MM): ");
+                String ed = sc.nextLine().trim();
+
                 try {
                     edt = LocalDateTime.parse(ed, dmyhm);
                     System.out.println("Success! Date saved: " + edt);
@@ -99,6 +102,7 @@ public class Main
 
         System.out.print("Add subtasks?: 1 for Y or 0 for N");
         int chs=sc.nextInt();
+        sc.nextLine();
         while (chs!=0)
         {
             System.out.print("Enter subtask name: ");
@@ -106,6 +110,7 @@ public class Main
             newTask.addsubtask(sn);
             System.out.print("Add more subtasks? 1 or 0: ");
             chs=sc.nextInt();
+            sc.nextLine();
         }
         
         return newTask;
